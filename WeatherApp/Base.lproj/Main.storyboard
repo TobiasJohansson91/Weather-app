@@ -13,7 +13,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--City-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="WeatherApp" customModuleProvider="target" sceneMemberID="viewController">
@@ -36,7 +36,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Falun" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="hhU-SO-Xag">
-                                <rect key="frame" x="132" y="139" width="111" height="56"/>
+                                <rect key="frame" x="132" y="139.5" width="111" height="55.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="hhU-SO-Xag" secondAttribute="height" multiplier="1:0.5" id="cSN-6W-3aF"/>
                                 </constraints>
@@ -57,6 +57,17 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <navigationItem key="navigationItem" title="City" id="eCt-q7-2FN">
+                        <barButtonItem key="rightBarButtonItem" systemItem="bookmarks" id="wLK-xs-aZM">
+                            <connections>
+                                <action selector="favoriteButton:" destination="BYZ-38-t0r" id="Xvc-2Z-yuB"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="cityLabel" destination="hhU-SO-Xag" id="cCA-Y7-2SZ"/>
+                        <outlet property="tempLabel" destination="Uf4-kv-F8D" id="wfu-yj-UY3"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

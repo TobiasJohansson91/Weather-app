@@ -7,24 +7,49 @@
 //
 
 import UIKit
+import CoreLocation
 
-class TableViewController: UITableViewController, UISearchBarDelegate {
+class TableViewController: UITableViewController, UISearchBarDelegate, CLLocationManagerDelegate {
     
     @IBOutlet weak var searchBar: UISearchBar!
     let data = ["Göteborg", "Krianstad", "Falkenberg", "Stockholm", "Varberg"]
-    
+    var sectionArray: [[CityWeather]] = [[],[],[]]
     var filteredData: [String]!;
+    var testArray: [CityWeather]?
+    let locationManager = CLLocationManager()
+    var cordinates = ["lat":37.33, "long":-122.024]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         filteredData = data
         searchBar.delegate = self
         
+        let request = WebRequestHandler()
+        testArray = request.httpRequest(urlString: "http://api.openweathermap.org/data/2.5/find?q=London&type=like&APPID=10b122ec245db62e54a3bc59d9b36b82")
+        
+        locationManager.requestWhenInUseAuthorization()
+        if CLLocationManager.locationServicesEnabled(){
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+            locationManager.requestLocation()
+        }
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.first{
+            cordinates["lat"] = location.coordinate.latitude
+            cordinates["long"] = location.coordinate.longitude
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(error.localizedDescription)
     }
 
     override func didReceiveMemoryWarning() {
@@ -36,7 +61,7 @@ class TableViewController: UITableViewController, UISearchBarDelegate {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 1
+        return 3
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -53,6 +78,19 @@ class TableViewController: UITableViewController, UISearchBarDelegate {
         cell.layer.borderColor = UIColor.black.cgColor
         cell.layer.borderWidth = 2
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch section {
+        case 0:
+            return "Your location"
+        case 1:
+            return "Favorites"
+        case 2:
+            return "Search"
+        default:
+            return ""
+        }
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
