@@ -9,23 +9,19 @@
 import UIKit
 import CoreLocation
 
-class TableViewController: UITableViewController, UISearchBarDelegate, CLLocationManagerDelegate {
+class TableViewController: UITableViewController, UISearchBarDelegate, CLLocationManagerDelegate, WebRequestHandlerDelegate {
     
     @IBOutlet weak var searchBar: UISearchBar!
-    let data = ["Göteborg", "Krianstad", "Falkenberg", "Stockholm", "Varberg"]
     var sectionArray: [[CityWeather]] = [[],[],[]]
     var filteredData: [String]!;
-    var testArray: [CityWeather]?
     let locationManager = CLLocationManager()
     var cordinates = ["lat":37.33, "long":-122.024]
+    let request = WebRequestHandler()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        filteredData = data
         searchBar.delegate = self
-        
-        let request = WebRequestHandler()
-        testArray = request.httpRequest(urlString: "http://api.openweathermap.org/data/2.5/find?q=London&type=like&APPID=10b122ec245db62e54a3bc59d9b36b82")
+        request.delegate = self
         
         locationManager.requestWhenInUseAuthorization()
         if CLLocationManager.locationServicesEnabled(){
@@ -33,6 +29,8 @@ class TableViewController: UITableViewController, UISearchBarDelegate, CLLocatio
             locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
             locationManager.requestLocation()
         }
+        
+        requestWithId()
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -46,10 +44,24 @@ class TableViewController: UITableViewController, UISearchBarDelegate, CLLocatio
             cordinates["lat"] = location.coordinate.latitude
             cordinates["long"] = location.coordinate.longitude
         }
+        requestWithCordinates()
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print(error.localizedDescription)
+        requestWithCordinates()
+    }
+    
+    func requestWithCordinates(){
+        request.httpRequest(urlString: "http://api.openweathermap.org/data/2.5/weather?lat=\(cordinates["lat"]!)&lon=\(cordinates["long"]!)&APPID=10b122ec245db62e54a3bc59d9b36b82", key: request.CORDINATES_KEY)
+    }
+    
+    func requestWithId(){
+        if let favoritesArray = UserDefaults.standard.array(forKey: "favorites") as? [String]{
+            let arrayString = favoritesArray.joined(separator: ",")
+            
+            request.httpRequest(urlString: "http://api.openweathermap.org/data/2.5/group?id=\(arrayString)&units=metric&APPID=10b122ec245db62e54a3bc59d9b36b82", key: request.GROUP_ID_KEY)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -66,17 +78,20 @@ class TableViewController: UITableViewController, UISearchBarDelegate, CLLocatio
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return filteredData.count
+        return sectionArray[section].count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellIdentifier", for: indexPath) as! MyTableViewCell
-        
-        cell.cityLabel.text = filteredData[indexPath.row]
-        cell.tempLabel.text = "50"
+        let city = sectionArray[indexPath.section][indexPath.row]
+        cell.cityLabel.text = city.name + ", " + city.country
+        cell.tempLabel.text = String(city.temp)
+        cell.weatherIcon.image = UIImage(named: city.icon)
         cell.layer.cornerRadius = 10
         cell.layer.borderColor = UIColor.black.cgColor
         cell.layer.borderWidth = 2
+        cell.cellId = indexPath.row
+        cell.section = indexPath.section
         return cell
     }
     
@@ -94,9 +109,16 @@ class TableViewController: UITableViewController, UISearchBarDelegate, CLLocatio
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        filteredData = searchText.isEmpty ? data : data.filter{(item: String)-> Bool in
-            return item.range(of: searchText, options: .caseInsensitive) != nil
+        if !searchText.isEmpty{
+            request.httpRequest(urlString: "http://api.openweathermap.org/data/2.5/find?q=\(searchText)&type=like&APPID=10b122ec245db62e54a3bc59d9b36b82", key: request.FIND_KEY)
+        } else{
+            sectionArray[2] = []
+            tableView.reloadData()
         }
+    }
+    
+    func getWebRequestArray(array: [CityWeather], arrayNr: Int) {
+        sectionArray[arrayNr] = array
         tableView.reloadData()
     }
 
@@ -134,15 +156,20 @@ class TableViewController: UITableViewController, UISearchBarDelegate, CLLocatio
         return true
     }
     */
-
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        
+        let cell = sender as! MyTableViewCell
+        let destView = segue.destination as! ViewController
+        destView.city = sectionArray[cell.section][cell.cellId]
+        destView.tableView = self
+        destView.row = cell.cellId
+        
     }
-    */
 
 }

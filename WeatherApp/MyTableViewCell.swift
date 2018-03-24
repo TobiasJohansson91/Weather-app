@@ -12,6 +12,8 @@ class MyTableViewCell: UITableViewCell {
     @IBOutlet weak var cityLabel: UILabel!
     @IBOutlet weak var tempLabel: UILabel!
     @IBOutlet weak var weatherIcon: UIImageView!
+    var cellId: Int!
+    var section: Int!
     
     override func awakeFromNib() {
         super.awakeFromNib()
