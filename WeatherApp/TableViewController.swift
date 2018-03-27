@@ -20,6 +20,9 @@ class TableViewController: UITableViewController, UISearchBarDelegate, CLLocatio
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let imageView = UIImageView(image: #imageLiteral(resourceName: "weatherBackground"))
+        tableView.backgroundView = imageView
+        tableView.tableFooterView = UIView()
         searchBar.delegate = self
         request.delegate = self
         
@@ -90,6 +93,7 @@ class TableViewController: UITableViewController, UISearchBarDelegate, CLLocatio
         cell.layer.cornerRadius = 10
         cell.layer.borderColor = UIColor.black.cgColor
         cell.layer.borderWidth = 2
+        cell.backgroundColor = .clear
         cell.cellId = indexPath.row
         cell.section = indexPath.section
         return cell
@@ -110,7 +114,7 @@ class TableViewController: UITableViewController, UISearchBarDelegate, CLLocatio
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if !searchText.isEmpty{
-            request.httpRequest(urlString: "http://api.openweathermap.org/data/2.5/find?q=\(searchText)&type=like&APPID=10b122ec245db62e54a3bc59d9b36b82", key: request.FIND_KEY)
+            request.httpRequest(urlString: "http://api.openweathermap.org/data/2.5/find?q=\(searchText.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!)&type=like&APPID=10b122ec245db62e54a3bc59d9b36b82", key: request.FIND_KEY)
         } else{
             sectionArray[2] = []
             tableView.reloadData()

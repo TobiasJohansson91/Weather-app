@@ -20,10 +20,10 @@ class WebRequestHandler {
     
     func httpRequest(urlString: String, key: Int) {
         var cityList:[CityWeather] = []
-        if let url: URL = URL(string: urlString){
+        if let url = URL(string: urlString){
             URLSession.shared.dataTask(with: url) {(data, response, error) in
                 if error != nil {
-                    print(error)
+                    print(error!)
                 }else {
                     if let actualData = data {
                         do{
