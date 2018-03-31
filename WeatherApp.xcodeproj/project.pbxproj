@@ -15,6 +15,7 @@
 		727C91BD2050660F008DFA97 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 727C91BB2050660F008DFA97 /* LaunchScreen.storyboard */; };
 		727C91C520515D21008DFA97 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 727C91C420515D21008DFA97 /* TableViewController.swift */; };
 		727C91C720516191008DFA97 /* MyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 727C91C620516191008DFA97 /* MyTableViewCell.swift */; };
+		72BD3F2E206FA5FF0025E39E /* ViewControllerGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72BD3F2D206FA5FF0025E39E /* ViewControllerGraph.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		727C91BE2050660F008DFA97 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		727C91C420515D21008DFA97 /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		727C91C620516191008DFA97 /* MyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTableViewCell.swift; sourceTree = "<group>"; };
+		72BD3F2D206FA5FF0025E39E /* ViewControllerGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerGraph.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 				727C91B22050660F008DFA97 /* AppDelegate.swift */,
 				727C91B42050660F008DFA97 /* ViewController.swift */,
 				727C91B62050660F008DFA97 /* Main.storyboard */,
+				72BD3F2D206FA5FF0025E39E /* ViewControllerGraph.swift */,
 				7239C15F20567BB700720D63 /* WebRequestHandler.swift */,
 				727C91C620516191008DFA97 /* MyTableViewCell.swift */,
 				727C91C420515D21008DFA97 /* TableViewController.swift */,
@@ -150,6 +153,7 @@
 				727C91C520515D21008DFA97 /* TableViewController.swift in Sources */,
 				727C91B32050660F008DFA97 /* AppDelegate.swift in Sources */,
 				7239C16020567BB700720D63 /* WebRequestHandler.swift in Sources */,
+				72BD3F2E206FA5FF0025E39E /* ViewControllerGraph.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

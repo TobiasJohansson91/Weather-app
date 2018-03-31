@@ -9,6 +9,7 @@
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -121,7 +122,7 @@
                                 <rect key="frame" x="0.0" y="72" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="t6h-4r-s6p" id="ige-es-cmH">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qs3-qt-aEH">
@@ -158,7 +159,7 @@
                                     <outlet property="cityLabel" destination="Qs3-qt-aEH" id="DsG-dm-kbs"/>
                                     <outlet property="tempLabel" destination="Z9U-u9-Mwd" id="oB2-3d-77E"/>
                                     <outlet property="weatherIcon" destination="nWf-9r-mbg" id="9QO-R2-3kb"/>
-                                    <segue destination="BYZ-38-t0r" kind="show" id="F82-GH-WLp"/>
+                                    <segue destination="BYZ-38-t0r" kind="show" identifier="CityWeatherSegue" id="F82-GH-WLp"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -167,14 +168,43 @@
                             <outlet property="delegate" destination="7Tq-Lk-kgO" id="lGS-SM-yI6"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="City weather" id="5PN-ba-RYZ"/>
+                    <navigationItem key="navigationItem" title="City weather" id="5PN-ba-RYZ">
+                        <rightBarButtonItems>
+                            <barButtonItem title="Choose" id="HX6-Od-vPe">
+                                <connections>
+                                    <action selector="chooseButtonClicked:" destination="7Tq-Lk-kgO" id="XEV-Ml-ObZ"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Graph" id="JJB-4D-W1U">
+                                <connections>
+                                    <segue destination="l6S-qR-OiH" kind="show" identifier="GraphSegue" id="QNm-nv-RSs"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
+                    </navigationItem>
                     <connections>
+                        <outlet property="graphButton" destination="JJB-4D-W1U" id="3CM-Lg-LmN"/>
                         <outlet property="searchBar" destination="akX-ql-7Rw" id="39o-mZ-eKK"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RyN-H6-aYW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="528.79999999999995" y="187.55622188905548"/>
+        </scene>
+        <!--View Controller Graph-->
+        <scene sceneID="Yje-xW-suy">
+            <objects>
+                <viewController id="l6S-qR-OiH" customClass="ViewControllerGraph" customModule="WeatherApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="DlJ-Fl-RhW">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <viewLayoutGuide key="safeArea" id="CNM-oi-H0v"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OWu-lX-l3s" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="543" y="949"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="VCU-Se-jVk">
