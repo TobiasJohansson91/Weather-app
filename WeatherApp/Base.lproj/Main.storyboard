@@ -198,13 +198,28 @@
                     <view key="view" contentMode="scaleToFill" id="DlJ-Fl-RhW">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pd8-gr-PP5" customClass="BarChartView" customModule="Charts">
+                                <rect key="frame" x="16" y="80" width="343" height="567"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.32074552774429321" green="0.66700690984725952" blue="0.88825505971908569" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="CNM-oi-H0v" firstAttribute="bottom" secondItem="pd8-gr-PP5" secondAttribute="bottom" constant="20" id="VZy-J6-xSB"/>
+                            <constraint firstItem="pd8-gr-PP5" firstAttribute="top" secondItem="CNM-oi-H0v" secondAttribute="top" constant="16" id="brO-dj-pUT"/>
+                            <constraint firstItem="pd8-gr-PP5" firstAttribute="leading" secondItem="CNM-oi-H0v" secondAttribute="leading" constant="16" id="tWY-IX-Ql1"/>
+                            <constraint firstItem="CNM-oi-H0v" firstAttribute="trailing" secondItem="pd8-gr-PP5" secondAttribute="trailing" constant="16" id="x5d-WL-FQE"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="CNM-oi-H0v"/>
                     </view>
+                    <connections>
+                        <outlet property="graphView" destination="pd8-gr-PP5" id="sfV-Jh-rv5"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OWu-lX-l3s" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="543" y="949"/>
+            <point key="canvasLocation" x="541.60000000000002" y="948.57571214392806"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="VCU-Se-jVk">

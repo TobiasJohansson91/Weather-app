@@ -133,7 +133,7 @@ class TableViewController: UITableViewController, UISearchBarDelegate, CLLocatio
                 graphArray.append(sectionArray[index.section][index.row])
             }
             let destView = segue.destination as! ViewControllerGraph
-            destView.graphArray = graphArray
+            destView.cityArray = graphArray
             chooseButtonClicked("self")
         }
         
