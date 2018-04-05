@@ -60,28 +60,37 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="text" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="arW-gL-Psw">
-                                <rect key="frame" x="163.5" y="435.5" width="48" height="30"/>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jL2-dG-9Gh">
+                                <rect key="frame" x="137.5" y="283.5" width="100" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="A1L-v8-RnM"/>
+                                    <constraint firstAttribute="height" constant="100" id="w0w-Lr-cdq"/>
+                                </constraints>
+                            </imageView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="text" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9lP-2H-2DV">
+                                <rect key="frame" x="170" y="435.5" width="35" height="33"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="Uf4-kv-F8D" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="3UL-yF-K2B"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="hhU-SO-Xag" secondAttribute="trailing" constant="132" id="BgN-eD-fyE"/>
+                            <constraint firstItem="jL2-dG-9Gh" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="DZV-4S-6Ev"/>
                             <constraint firstItem="hhU-SO-Xag" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" multiplier="0.5" id="P0z-HT-6T1"/>
+                            <constraint firstItem="jL2-dG-9Gh" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Qxh-Gq-GsO"/>
                             <constraint firstItem="ysr-xv-06h" firstAttribute="top" secondItem="Uf4-kv-F8D" secondAttribute="bottom" constant="40" id="SMV-J0-nVb"/>
                             <constraint firstItem="hhU-SO-Xag" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="132" id="UQ1-nI-1p0"/>
                             <constraint firstItem="4aG-t4-cpC" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Us7-oi-a5E"/>
                             <constraint firstItem="4aG-t4-cpC" firstAttribute="top" secondItem="ysr-xv-06h" secondAttribute="bottom" constant="20" id="Vk3-ND-uvO"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Uf4-kv-F8D" secondAttribute="trailing" constant="70" id="ZyR-Vg-b5h"/>
-                            <constraint firstItem="arW-gL-Psw" firstAttribute="top" secondItem="4aG-t4-cpC" secondAttribute="bottom" constant="20" id="efR-Hj-pdr"/>
                             <constraint firstItem="Uf4-kv-F8D" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="70" id="ek3-ws-tYa"/>
+                            <constraint firstItem="9lP-2H-2DV" firstAttribute="top" secondItem="4aG-t4-cpC" secondAttribute="bottom" constant="20" id="jkR-vg-yKS"/>
                             <constraint firstItem="ysr-xv-06h" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="kgw-xY-RxI"/>
-                            <constraint firstItem="arW-gL-Psw" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="pea-pQ-aAS"/>
                             <constraint firstItem="Uf4-kv-F8D" firstAttribute="top" secondItem="hhU-SO-Xag" secondAttribute="bottom" constant="8" id="pjj-Yp-uQh"/>
+                            <constraint firstItem="9lP-2H-2DV" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="uVv-Iq-iW7"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -94,8 +103,13 @@
                     </navigationItem>
                     <connections>
                         <outlet property="cityLabel" destination="hhU-SO-Xag" id="cCA-Y7-2SZ"/>
-                        <outlet property="clothesTextView" destination="arW-gL-Psw" id="5be-Re-Ss8"/>
+                        <outlet property="cityLabelLeftConstrint" destination="UQ1-nI-1p0" id="C8p-cI-3Y0"/>
+                        <outlet property="cityLabelRightConstrint" destination="BgN-eD-fyE" id="S8E-FF-67C"/>
+                        <outlet property="clothesTextView" destination="9lP-2H-2DV" id="vI7-qO-khd"/>
                         <outlet property="tempLabel" destination="Uf4-kv-F8D" id="wfu-yj-UY3"/>
+                        <outlet property="tempLabelLeftConstraint" destination="ek3-ws-tYa" id="oZ7-d6-Ydk"/>
+                        <outlet property="tempLabelRightConstraint" destination="ZyR-Vg-b5h" id="TcZ-Wp-sGu"/>
+                        <outlet property="weatherIconImage" destination="jL2-dG-9Gh" id="sD7-PT-v2j"/>
                         <outlet property="weatherStatusLabel" destination="4aG-t4-cpC" id="Wyv-Ug-OaP"/>
                         <outlet property="windspeedLabel" destination="ysr-xv-06h" id="373-9Y-3bb"/>
                     </connections>

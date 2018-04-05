@@ -13,26 +13,68 @@ class ViewController: UIViewController {
     @IBOutlet weak var tempLabel: UILabel!
     @IBOutlet weak var windspeedLabel: UILabel!
     @IBOutlet weak var weatherStatusLabel: UILabel!
-    @IBOutlet weak var clothesTextView: UITextField!
+    @IBOutlet weak var clothesTextView: UITextView!
+    @IBOutlet weak var cityLabelLeftConstrint: NSLayoutConstraint!
+    @IBOutlet weak var cityLabelRightConstrint: NSLayoutConstraint!
+    @IBOutlet weak var tempLabelLeftConstraint: NSLayoutConstraint!
+    @IBOutlet weak var tempLabelRightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var weatherIconImage: UIImageView!
+    
     var city: CityWeather!
     let FAVORITE_KEY = "favorites"
     var tableView: TableViewController!
     var row: Int!
+    var animator: UIDynamicAnimator!
+    var gravity: UIGravityBehavior!
+    var collision: UICollisionBehavior!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
         self.title = city.name
         self.cityLabel.text = city.name
-        self.tempLabel.text = String(format: "%.1f", city.temp)
+        self.tempLabel.text = "\(String(format: "%.1f", city.temp)) °C"
         self.windspeedLabel.text = "Windspeed: " + String(format: "%.2f", city.windSpeed) + " m/s"
-        self.weatherStatusLabel.text = city.weatherPrognose
-        neededClothes()
-    }
+        self.weatherStatusLabel.text = "Weather: \(city.weatherPrognose)"
+        clothesTextView.text = neededClothes()
+        
+        let halfViewWidth = view.frame.width/2
+        cityLabelLeftConstrint.constant = halfViewWidth
+        cityLabelRightConstrint.constant = halfViewWidth
+        tempLabelLeftConstraint.constant = halfViewWidth
+        tempLabelRightConstraint.constant = halfViewWidth
+        windspeedLabel.alpha = 0
+        weatherStatusLabel.alpha = 0
+        clothesTextView.alpha = 0
+        
+        weatherIconImage.image = UIImage(named: "\(city.icon)")
+        weatherIconImage.layer.cornerRadius = weatherIconImage.frame.height/2
+        weatherIconImage.clipsToBounds = true
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        UIView.animate(withDuration: 2) {
+            self.cityLabelLeftConstrint.constant = 132
+            self.cityLabelRightConstrint.constant = 132
+            self.tempLabelLeftConstraint.constant = 70
+            self.tempLabelRightConstraint.constant = 70
+            self.windspeedLabel.alpha = 1
+            self.weatherStatusLabel.alpha = 1
+            self.clothesTextView.alpha = 1
+            self.view.layoutIfNeeded()
+        }
+        
+        animator = UIDynamicAnimator(referenceView: view)
+        gravity = UIGravityBehavior(items: [weatherIconImage])
+        gravity.magnitude = 0.2
+        collision = UICollisionBehavior(items: [weatherIconImage])
+        collision.translatesReferenceBoundsIntoBoundary = true
+        let itemBehave = UIDynamicItemBehavior(items: [weatherIconImage])
+        itemBehave.elasticity = 0.6
+        animator.addBehavior(collision)
+        animator.addBehavior(gravity)
+        animator.addBehavior(itemBehave)
     }
 
     @IBAction func favoriteButton(_ sender: Any) {
@@ -56,19 +98,19 @@ class ViewController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
     
-    func neededClothes(){
+    func neededClothes()-> String{
+        var clothesString = ""
         if city.temp >= 18 && city.windSpeed < 5 {
-            clothesTextView.text = "t-shirt and shorts"
+            clothesString += "It's hot, take t-shirt and shorts. "
         } else if city.temp >= 5 && city.windSpeed < 12 {
-            clothesTextView.text = "It's a bit cold, take a jacket"
+            clothesString += "It's a bit cold, take a jacket. "
         } else {
-            clothesTextView.text = "It's very cold outside, take a thick jacket"
+            clothesString += "It's very cold outside, take a thick jacket. "
         }
-        
-        /*if rain != nil {
-            print("It's raining! You need an umbrella")
-        }*/
+        if city.weatherPrognose == "Rain" {
+            clothesString += "\nIt's raining! You need an umbrella."
+        }
+        return clothesString
     }
-    
 }
 

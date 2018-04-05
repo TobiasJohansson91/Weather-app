@@ -18,10 +18,6 @@ class ViewControllerGraph: UIViewController, ChartViewDelegate {
         graphView.delegate = self
         setupGraph()
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
     
     func setupGraph() {
         graphDesign()
@@ -39,8 +35,6 @@ class ViewControllerGraph: UIViewController, ChartViewDelegate {
         graphView.rightAxis.labelFont = graphView.legend.font
         graphView.scaleXEnabled = false
         graphView.scaleYEnabled = false
-        
-        
     }
     
     func insertData() {
@@ -52,7 +46,6 @@ class ViewControllerGraph: UIViewController, ChartViewDelegate {
             dataSet.setColors(colors[i])
             dataSet.valueFont = .systemFont(ofSize: 15)
             dataSets.append(dataSet)
-            
         }
         let charData = BarChartData(dataSets: dataSets)
         graphView.data = charData
@@ -61,6 +54,4 @@ class ViewControllerGraph: UIViewController, ChartViewDelegate {
     func animateGraph(){
         graphView.animate(xAxisDuration: 2, yAxisDuration: 2)
     }
-    //Todo Appen crashar eftersom det bara kan vara 5 färger
-    //Todo dynamics och animate
 }

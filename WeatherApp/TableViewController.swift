@@ -54,7 +54,7 @@ class TableViewController: UITableViewController, UISearchBarDelegate, CLLocatio
     }
     
     func requestWithCordinates(){
-        request.httpRequest(urlString: "http://api.openweathermap.org/data/2.5/weather?lat=\(cordinates["lat"]!)&lon=\(cordinates["long"]!)&APPID=10b122ec245db62e54a3bc59d9b36b82", key: request.CORDINATES_KEY)
+        request.httpRequest(urlString: "http://api.openweathermap.org/data/2.5/weather?lat=\(cordinates["lat"]!)&lon=\(cordinates["long"]!)&units=metric&APPID=10b122ec245db62e54a3bc59d9b36b82", key: request.CORDINATES_KEY)
     }
     
     func requestWithId(){
@@ -63,10 +63,6 @@ class TableViewController: UITableViewController, UISearchBarDelegate, CLLocatio
             
             request.httpRequest(urlString: "http://api.openweathermap.org/data/2.5/group?id=\(arrayString)&units=metric&APPID=10b122ec245db62e54a3bc59d9b36b82", key: request.GROUP_ID_KEY)
         }
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -81,7 +77,7 @@ class TableViewController: UITableViewController, UISearchBarDelegate, CLLocatio
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellIdentifier", for: indexPath) as! MyTableViewCell
         let city = sectionArray[indexPath.section][indexPath.row]
         cell.cityLabel.text = city.name + ", " + city.country
-        cell.tempLabel.text = String(city.temp)
+        cell.tempLabel.text = String(city.temp) + " °C"
         cell.weatherIcon.image = UIImage(named: city.icon)
         cell.layer.cornerRadius = 10
         cell.layer.borderColor = UIColor.black.cgColor
@@ -107,7 +103,7 @@ class TableViewController: UITableViewController, UISearchBarDelegate, CLLocatio
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if !searchText.isEmpty{
-            request.httpRequest(urlString: "http://api.openweathermap.org/data/2.5/find?q=\(searchText.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!)&type=like&APPID=10b122ec245db62e54a3bc59d9b36b82", key: request.FIND_KEY)
+            request.httpRequest(urlString: "http://api.openweathermap.org/data/2.5/find?q=\(searchText.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!)&type=like&units=metric&APPID=10b122ec245db62e54a3bc59d9b36b82", key: request.FIND_KEY)
         } else{
             sectionArray[2] = []
             tableView.reloadData()
@@ -154,15 +150,22 @@ class TableViewController: UITableViewController, UISearchBarDelegate, CLLocatio
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if isEditing && tableView.indexPathsForSelectedRows!.count >= 2 {
+        let selectedRows = tableView.indexPathsForSelectedRows
+        if isEditing && selectedRows!.count >= 2 && selectedRows!.count <= 5 {
             graphButton.title = "Graph"
             graphButton.isEnabled = true
+        }else {
+            disableGraphButton()
         }
     }
     
     override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        if isEditing && tableView.indexPathsForSelectedRows != nil && tableView.indexPathsForSelectedRows!.count < 2 {
+        let selectedRows = tableView.indexPathsForSelectedRows
+        if isEditing && selectedRows != nil && selectedRows!.count < 2 || selectedRows != nil && selectedRows!.count > 5{
             disableGraphButton()
+       }else {
+            graphButton.title = "Graph"
+            graphButton.isEnabled = true
         }
     }
     func disableGraphButton(){

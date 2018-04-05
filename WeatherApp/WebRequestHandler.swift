@@ -116,11 +116,11 @@ struct City: Decodable{
 struct CityWeather{
     let name: String
     let cityId: Int
-    let country: String //sys country
-    let icon: String //weather icon
-    let temp: Float //main temp
-    let windSpeed: Float //wind speed
-    let weatherPrognose: String //weather main
+    let country: String 
+    let icon: String
+    let temp: Float
+    let windSpeed: Float
+    let weatherPrognose: String
     
     init(name: String, cityId: Int, country: String, icon: String, temp: Float, windSpeed: Float, weatherPrognose: String) {
         self.name = name
